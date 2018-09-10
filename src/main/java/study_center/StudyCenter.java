@@ -8,6 +8,7 @@ import study_center.reports.ShortReport;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Scanner;
 
 public class StudyCenter {
     public static void main(String[] args) {
@@ -28,12 +29,33 @@ public class StudyCenter {
         programTotalJava.calculateProgramEndDate();
 
         System.out.println("CURRENT DATE: " + format.format(currentDate) + "  " + tz);
-        System.out.println("-----------------------Short Report---------------------");
-        Report shortReport = new ShortReport();
-        shortReport.showReportForStudent(ivan);
-        System.out.println("-----------------------Long Report---------------------");
-        Report longReport = new LongReport();
-        longReport.showReportForStudent(ivan);
+        boolean isInvalidInput;
+        Scanner scanner = new Scanner(System.in);
+        int choice;
+
+        do {
+            System.out.print("Enter '1' for Short Report on Student or '2' for Long Report on Student: ");
+            choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    System.out.println("-----------------------Short Report---------------------");
+                    Report shortReport = new ShortReport();
+                    shortReport.showReportForStudent(ivan);
+                    isInvalidInput = false;
+                    break;
+                case 2:
+                    System.out.println("-----------------------Long Report---------------------");
+                    Report longReport = new LongReport();
+                    longReport.showReportForStudent(ivan);
+                    isInvalidInput = false;
+                    break;
+                default:
+                    System.out.println("Invalid input! Please try again!");
+                    isInvalidInput = true;
+                    break;
+            }
+        } while (isInvalidInput);
     }
 }
 
