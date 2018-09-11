@@ -12,17 +12,23 @@ public class LongReport implements Report {
     public void showReportForStudent(Student currentStudent) {
         format.setLenient(false);
         Program program = currentStudent.getStudentsProgram();
-        Date programStartDate = program.getProgramStartDate();
-        Date programStopDate = program.getProgramEndDate();
         StringBuilder longInfo = new StringBuilder();
+
         longInfo.append("STUDENT: " + currentStudent.getName() + " " + currentStudent.getSurName() + "\n");
-        longInfo.append("STUDENT'S PROGRAM: " + program.getProgramName() + "\n");
-        longInfo.append("START: " + format.format(programStartDate) + "\n");
-        longInfo.append("PROGRAM'S DURATION: " + program.countProgramDuration() + " hours\n");
-        if (program.getCourses() != null) {
-            longInfo.append(program.showProgramCourses());
+
+        if (program != null) {
+            Date programStartDate = program.getProgramStartDate();
+            Date programStopDate = program.getProgramEndDate();
+            longInfo.append("STUDENT'S PROGRAM: " + program.getProgramName() + "\n");
+            if (programStopDate != null) {
+                longInfo.append("START: " + format.format(programStartDate) + "\n");
+                longInfo.append("PROGRAM'S DURATION: " + program.countProgramDuration() + " hours\n");
+                longInfo.append(program.showProgramCourses());
+            } else {
+                longInfo.append("Student's program is empty now (no courses assigned to it) \n");
+            }
         } else {
-            longInfo.append("No assigned courses for this student \n");
+            longInfo.append("No assigned programs for this student yet \n");
         }
         System.out.println(longInfo.toString());
     }

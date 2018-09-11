@@ -12,7 +12,7 @@ public class Program {
     private Date programEndDate;
     private String programName;
     private List<Course> courses = new ArrayList<Course>();
-    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+    SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
 
     public Program(String programStartDate, String programName) {
         format.setLenient(false);

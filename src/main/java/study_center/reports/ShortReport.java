@@ -11,19 +11,26 @@ public class ShortReport implements Report {
 
     public void showReportForStudent(Student currentStudent) {
         format.setLenient(false);
-        Program program = currentStudent.getStudentsProgram();
-        Date programStartDate = program.getProgramStartDate();
-        Date programStopDate = program.getProgramEndDate();
         StringBuilder shortInfo = new StringBuilder();
+        Program program = currentStudent.getStudentsProgram();
+
         shortInfo.append("STUDENT: " + currentStudent.getName() + " " + currentStudent.getSurName() + "\n");
-        shortInfo.append("STUDENT'S PROGRAM: " + program.getProgramName() + "\n");
-        if (program.getProgramStartDate() != null) {
-            shortInfo.append("START: " + format.format(programStartDate) + "\n");
-            shortInfo.append("PROGRAM'S DURATION: " + program.countProgramDuration() + " hours\n");
-            shortInfo.append(program.showProgramProgress(programStartDate, programStopDate));
-        }
-        else {
-            shortInfo.append("No assigned courses for this student \n");
+
+        if (program != null) {
+            Date programStartDate = program.getProgramStartDate();
+            Date programStopDate = program.getProgramEndDate();
+            shortInfo.append("STUDENT'S PROGRAM: " + program.getProgramName() + "\n");
+            if (programStopDate != null) {
+                shortInfo.append("START: " + format.format(programStartDate) + "\n");
+                shortInfo.append("PROGRAM'S DURATION: " + program.countProgramDuration() + " hours\n");
+                shortInfo.append("THE PROGRAM ENDS ON " + format.format(programStopDate) + " (in "
+                        + program.countProgramDuration() / 8 + " days and " + program.countProgramDuration() % 8 + " hours)\n");
+                shortInfo.append(program.showProgramProgress(programStartDate, programStopDate));
+            } else {
+                shortInfo.append("Student's program is empty now (no courses assigned to it) \n");
+            }
+        } else {
+            shortInfo.append("No assigned programs for this student yet \n");
         }
         System.out.println(shortInfo.toString());
     }
